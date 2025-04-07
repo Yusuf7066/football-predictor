@@ -262,38 +262,36 @@ def send_otp():
 
 @app.route("/verify_otp", methods=["GET", "POST"])
 def verify_otp():
-    if request.method == "GET":
-        return render_template("verify_otp.html", nickname=session.get("pending_nickname"))
+    if request.method == "POST":
+        nickname = request.form.get("nickname")
+        otp_entered = request.form.get("otp")
 
-    otp_entered = request.form.get("otp").strip()
-    nickname = session.get("pending_nickname")
+        conn = sqlite3.connect("predictions.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT otp, expires_at FROM otp_sessions WHERE nickname = ?", (nickname,))
+        row = cursor.fetchone()
+        conn.close()
 
-    conn = sqlite3.connect("predictions.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT otp, otp_expiry FROM users WHERE nickname = ?", (nickname,))
-    row = cursor.fetchone()
-    conn.close()
+        if not row:
+            flash("Session expired or nickname not found.")
+            return redirect("/login")
 
-    if not row:
-        flash("Nickname not found.")
-        return redirect("/login")
+        otp_db, expiry = row
 
-    otp_db, expiry = row
-    from dateutil import parser  # at the top of your file if not already
+        from dateutil import parser
+        if datetime.utcnow() > parser.parse(expiry):
+            flash("❌ OTP expired.")
+            return redirect("/login")
 
-    if datetime.utcnow() > parser.parse(expiry):
+        if otp_entered != otp_db:
+            flash("❌ Incorrect OTP.")
+            return redirect("/verify_otp")
 
-        flash("❌ OTP expired.")
-        return redirect("/login")
-
-    if otp_entered != otp_db:
-        flash("❌ Incorrect OTP.")
-        return redirect("/verify_otp")
-
-    session["nickname"] = nickname
-    session.pop("pending_nickname", None)
-    flash(f"✅ Welcome, {nickname}!")
-    return redirect("/")
+        session["nickname"] = nickname
+        flash("✅ Logged in successfully!")
+        return redirect("/")
+    
+    return render_template("verify_otp.html")
 
 @app.route("/logout")
 def logout():
