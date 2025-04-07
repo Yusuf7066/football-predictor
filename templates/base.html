@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Football App{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ Link to external CSS in static -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  {% block extra_styles %}{% endblock %}
+</head>
+<body>
+  <!-- 🌙 Dark Mode Toggle -->
+  <button class="toggle-btn" onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
+
+  <!-- 🔗 Navbar -->
+<nav>
+  <a href="/">🏠 Home</a>
+  <a href="/leaderboard">🏆 Leaderboard</a>
+
+  {% if session.nickname %}
+    <span>Welcome, {{ session.nickname }}!</span>
+    <a href="/logout">Logout</a>
+  {% else %}
+    <a href="/login">Login</a>
+  {% endif %}
+</nav>
+
+  <!-- 🧱 Page-specific content -->
+  {% block content %}{% endblock %}
+
+  <!-- ✅ Link to external JS in static -->
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

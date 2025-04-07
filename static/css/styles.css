@@ -1,0 +1,130 @@
+:root {
+  --bg: #f4f4f4;
+  --text: #111;
+  --card: #fff;
+  --accent: #007bff;
+  --border: #ddd;
+  --banner-bg: #e3f2fd;
+}
+body.dark {
+  --bg: #121212;
+  --text: #f0f0f0;
+  --card: #1f1f1f;
+  --accent: #0ea5e9;
+  --border: #333;
+  --banner-bg: #1a2e3d;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 20px;
+  margin: 0;
+  transition: background 0.3s, color 0.3s;
+}
+nav {
+  margin-bottom: 20px;
+}
+nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 15px;
+}
+a:hover {
+  text-decoration: underline;
+}
+.toggle-btn {
+  float: right;
+  padding: 6px 12px;
+  font-size: 14px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 🔧 Form layout and styling */
+.match-form {
+  padding: 16px;
+  font-size: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.match-form label {
+  display: block;
+  margin-top: 10px;
+}
+.match-form input,
+.match-form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: white;
+}
+.match-form button {
+  margin-top: 12px;
+  padding: 10px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  font-weight: bold;
+}
+
+/* 🎯 Score input layout */
+.score-inputs {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 5px;
+}
+.score-box {
+  flex: 1;
+  text-align: center;
+}
+
+/* 📱 Responsive tweaks */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  .toggle-btn {
+    float: none;
+    display: block;
+    margin-bottom: 10px;
+  }
+  nav a {
+    display: inline-block;
+    margin: 5px 8px 10px 0;
+  }
+  .score-inputs {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1rem;
+}
+.leaderboard-table th,
+.leaderboard-table td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+}
+.leaderboard-table th {
+  background: var(--card);
+  font-weight: bold;
+}
+
+

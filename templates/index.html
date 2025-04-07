@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Predict a Match{% endblock %}
+
+{% block content %}
+<h1>⚽ Predict a Match</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+{% for match in matches %}
+  <form method="POST" action="/predict" class="match-form">
+    <h3>{{ match.date }}: {{ match.home }} vs {{ match.away }}</h3>
+
+    <input type="hidden" name="match_id" value="{{ match.match_id }}">
+    <input type="hidden" name="match_time" value="{{ match.utc_datetime.isoformat() }}Z">
+
+   <p><strong>Logged in as:</strong> {{ session.nickname }}</p>
+
+    <label>Prediction:</label>
+    <select name="prediction" required>
+      <option value="">Choose</option>
+      <option value="Home Win">Home Win</option>
+      <option value="Draw">Draw</option>
+      <option value="Away Win">Away Win</option>
+    </select>
+
+    <label>Predicted Score:</label>
+    <div class="score-inputs">
+      <input type="number" name="home_score" placeholder="Home" min="0" required>
+      <span>-</span>
+      <input type="number" name="away_score" placeholder="Away" min="0" required>
+    </div>
+
+    <label>WhatsApp Number (optional):</label>
+    <input type="text" name="phone">
+
+    <button type="submit">Submit Prediction</button>
+  </form>
+{% endfor %}
+
+<br>
+<a href="/leaderboard">🏆 View Leaderboard</a>
+{% endblock %}

@@ -1,0 +1,28 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# SQLite DB (optional – remove if you want to track the DB in Git)
+*.db
+
+# VSCode & IDE files
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.*
+*.env.txt
+*.secret
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Render local dev (if using)
+*.render/

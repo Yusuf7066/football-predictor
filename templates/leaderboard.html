@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+<h1>🏆 Prediction Leaderboard</h1>
+
+{% if leaderboard %}
+  <table class="leaderboard-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in leaderboard %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ user[0] }}</td>
+          <td>{{ user[1] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No predictions scored yet. Be the first to win!</p>
+{% endif %}
+
+<br>
+<a href="/">← Back to Match Predictions</a>
+{% endblock %}

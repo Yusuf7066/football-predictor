@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP{% endblock %}
+
+{% block content %}
+<h2>📲 Verify Your OTP</h2>
+<form method="POST" action="/verify_otp" class="match-form">
+  <label>Nickname:</label>
+  <input type="text" name="nickname" value="{{ nickname }}" disabled>
+
+  <label>Enter OTP:</label>
+  <input type="text" name="otp" placeholder="6-digit code" required>
+
+  <button type="submit">Verify & Login</button>
+</form>
+{% endblock %}
