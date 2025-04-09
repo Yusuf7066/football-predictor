@@ -124,9 +124,7 @@ def register_auth_routes(app, client, FROM_WA):
         session["nickname"] = nickname
         return redirect("/verify_otp")
     
-def register_auth_routes(app, client, FROM_WA):
-    ...
-    
+
     @app.route("/logout")
     def logout():
         session.clear()
