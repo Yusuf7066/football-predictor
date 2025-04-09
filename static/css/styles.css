@@ -63,3 +63,15 @@ html.dark .match-form {
   background-color: #1e1e1e;
   border-color: #444;
 }
+body.dark {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark .navbar {
+  background-color: #222;
+}
+
+body.dark a {
+  color: #9ecfff;
+}

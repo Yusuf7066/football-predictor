@@ -4,14 +4,15 @@ function toggleTheme() {
 }
 
 window.onload = () => {
-  // Apply stored theme
-  if (localStorage.getItem('theme') === 'dark') {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
     document.body.classList.add('dark');
   }
 
-  // Attach toggle function to button
   const toggleButton = document.getElementById('darkToggle');
   if (toggleButton) {
     toggleButton.addEventListener('click', toggleTheme);
+  } else {
+    console.warn('Dark Mode toggle button not found');
   }
 };
