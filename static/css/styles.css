@@ -38,3 +38,18 @@
 .featured li {
   margin: 0.3em 0;
 }
+.score-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.score-inputs input {
+  width: 50px;
+  padding: 6px;
+  text-align: center;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
