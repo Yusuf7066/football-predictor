@@ -9,9 +9,6 @@ from twilio.rest import Client
 from dotenv import load_dotenv
 from dateutil import parser
 import random
-from routes.leaderboard import register_leaderboard_routes
-
-register_leaderboard_routes(app, headers, RESULTS_URL)
 
 # Load environment variables
 load_dotenv()
@@ -66,16 +63,14 @@ def get_odds_data():
                 }
     return odds
 
-
-
+# Register modular routes
 from routes.auth import register_auth_routes
 from routes.predictions import register_prediction_routes
 from routes.leaderboard import register_leaderboard_routes
 
-# Register blueprint-style route modules
 register_auth_routes(app, client, FROM_WA)
 register_prediction_routes(app, headers)
-register_leaderboard_routes(app, headers)
+register_leaderboard_routes(app, headers, RESULTS_URL)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
