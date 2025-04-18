@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Edit Prediction{% endblock %}
+
+{% block content %}
+<h2>✏️ Edit Your Prediction</h2>
+
+<style>
+  .match-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .team-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    margin: 0 5px;
+  }
+
+  form.edit-form {
+    max-width: 400px;
+    margin: auto;
+    background: var(--card-bg, #f9f9f9);
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  form.edit-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
+  form.edit-form input,
+  form.edit-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  form.edit-form button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 500px) {
+    .match-info {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<div class="match-info">
+  <img src="{{ home_crest }}" class="team-logo" alt="{{ home_team }}">
+  <span>{{ home_team }}</span>
+  <strong>vs</strong>
+  <span>{{ away_team }}</span>
+  <img src="{{ away_crest }}" class="team-logo" alt="{{ away_team }}">
+</div>
+
+<p style="text-align:center;"><strong>Match Date:</strong> {{ match_date }}</p>
+
+<form method="POST" class="edit-form">
+  <label for="prediction">Prediction Type:</label>
+  <select name="prediction" required>
+    <option value="Home Win" {% if prediction_type == "Home Win" %}selected{% endif %}>Home Win</option>
+    <option value="Draw" {% if prediction_type == "Draw" %}selected{% endif %}>Draw</option>
+    <option value="Away Win" {% if prediction_type == "Away Win" %}selected{% endif %}>Away Win</option>
+  </select>
+
+  <label for="home_score">Home Score:</label>
+  <input type="number" name="home_score" min="0" value="{{ home_score }}" required>
+
+  <label for="away_score">Away Score:</label>
+  <input type="number" name="away_score" min="0" value="{{ away_score }}" required>
+
+  <button type="submit">💾 Save Changes</button>
+</form>
+
+<a href="/my_predictions" class="back-link">🔙 Back to My Predictions</a>
+{% endblock %}

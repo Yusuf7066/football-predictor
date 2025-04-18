@@ -2,26 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}Football Predictor{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-  <nav class="navbar">
-    <a href="/">🏠 Home</a>
-    <a href="/leaderboard">🏆 Leaderboard</a>
-    {% if session.nickname %}
-      <span class="welcome">Welcome, {{ session.nickname }}!</span>
-      <a href="/logout">Logout</a>
-    {% else %}
-      <a href="/login">Login</a>
-    {% endif %}
-    <button id="darkToggle">🌙 Dark Mode</button>
+  <nav role="navigation" aria-label="Main Navigation" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 1rem;">
+    <div>
+      <a href="/">🏠 Home</a> |
+      <a href="/leaderboard">🏆 Leaderboard</a> |
+      <a href="/my_predictions">📋 My Predictions</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      {% if session.nickname %}
+        👤 {{ session.nickname }} |
+        <a href="/logout">🔓 Logout</a>
+      {% else %}
+        <a href="/login">🔐 Login</a>
+      {% endif %}
+      <button id="dark-mode-toggle" title="Toggle Dark Mode" style="padding: 4px 8px; border-radius: 6px; border: none; background: #333; color: #fff; cursor: pointer;">🌓</button>
+    </div>
   </nav>
 
-  <main>
+  <main style="padding: 1rem;">
     {% block content %}{% endblock %}
   </main>
+
+  <footer style="text-align: center; margin-top: 2rem; color: gray; font-size: 0.8rem;">
+    ⚽ Built with ❤️ for football fans
+  </footer>
+
+  <style>
+    nav a {
+      margin-right: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav a {
+        margin: 0.5rem 0;
+      }
+    }
+  </style>
 
   <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
 </body>

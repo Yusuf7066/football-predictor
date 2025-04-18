@@ -1,77 +1,172 @@
-.badge {
-  font-size: 1.2em;
-  padding: 0 4px;
-  border-radius: 5px;
-  margin-left: 2px;
+/* Reset & base setup */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.badge[title*="Top Scorer"] {
-  background: gold;
-  color: black;
-  font-weight: bold;
+/* Dark mode */
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
 }
 
-.badge[title*="Hot Streak"] {
-  background: orangered;
-  color: white;
-}
-
-.badge[title*="Perfect Score"] {
-  background: purple;
-  color: white;
-}
-
-.featured {
-  margin-bottom: 1.5em;
+/* Containers, cards, forms, tables */
+.match-form, .card, form, .flash, table {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   padding: 1em;
-  background: #1f2937;
-  border-left: 5px solid gold;
-  border-radius: 8px;
-}
-.featured h2 {
-  margin-top: 0;
-}
-.featured ul {
-  list-style: none;
-  padding-left: 0;
-}
-.featured li {
-  margin: 0.3em 0;
-}
-.score-inputs {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.score-inputs input {
-  width: 50px;
-  padding: 6px;
-  text-align: center;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-html.dark {
-  background-color: #111;
+body.dark .match-form,
+body.dark .card,
+body.dark form,
+body.dark .flash,
+body.dark table {
+  background-color: #1e1e1e;
+  border-color: #444;
   color: #fff;
 }
 
-html.dark .match-form {
-  background-color: #1e1e1e;
-  border-color: #444;
-}
-body.dark {
-  background-color: #121212;
-  color: #f0f0f0;
+/* Forms */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
 }
 
-body.dark .navbar {
+body.dark input,
+body.dark select {
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* Buttons */
+button {
+  padding: 0.6rem 1.2rem;
+  background-color: #0077cc;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+body.dark button {
+  background-color: #3399ff;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+table th, table td {
+  padding: 12px 8px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+}
+
+table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+body.dark table th {
   background-color: #222;
 }
 
-body.dark a {
-  color: #9ecfff;
+body.dark table tr {
+  border-bottom: 1px solid #555;
+}
+
+/* Flash messages */
+.flash {
+  background-color: #e0ffe0;
+  border: 1px solid #8f8;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+body.dark .flash {
+  background-color: #294c29;
+  border-color: #6f6;
+}
+
+/* Badge Legend */
+.badge-legend {
+  margin-top: 1.5rem;
+  background: #f1f1f1;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+body.dark .badge-legend {
+  background: #1c1c1c;
+  border-color: #555;
+}
+
+.badge-legend h4 {
+  margin-bottom: 8px;
+}
+
+.badge-legend ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.badge-legend li {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  table th, table td {
+    padding: 8px 4px;
+    font-size: 0.85rem;
+  }
+
+  button {
+    width: 100%;
+    text-align: center;
+  }
+
+  input, select {
+    font-size: 0.95rem;
+  }
+
+  .match-form, form, table {
+    padding: 0.8rem;
+  }
 }

@@ -9,10 +9,8 @@ window.onload = () => {
     document.body.classList.add('dark');
   }
 
-  const toggleButton = document.getElementById('darkToggle');
-  if (toggleButton) {
-    toggleButton.addEventListener('click', toggleTheme);
-  } else {
-    console.warn('Dark Mode toggle button not found');
+  const toggleBtn = document.getElementById('dark-mode-toggle');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleTheme);
   }
 };

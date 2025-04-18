@@ -2,14 +2,66 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>🔐 Login</h2>
-<form method="POST" action="/login" class="match-form">
-  <label>Nickname:</label>
-  <input type="text" name="nickname" required>
+<h2 style="text-align:center;">🔐 Login</h2>
 
-  <label>WhatsApp Number:</label>
-  <input type="text" name="phone" placeholder="+97412345678" required>
+<form method="POST" action="/login" class="auth-form">
+  <label for="nickname">Nickname:</label>
+  <input type="text" id="nickname" name="nickname" placeholder="e.g. afro" required>
 
-  <button type="submit">Send OTP via WhatsApp</button>
+  <label for="phone">WhatsApp Number:</label>
+  <input type="text" id="phone" name="phone" placeholder="+97412345678" required>
+
+  <button type="submit">📨 Send OTP via WhatsApp</button>
 </form>
+
+<style>
+  .auth-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: var(--card-bg, #f9f9f9);
+    padding: 1.2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  }
+
+  .auth-form label {
+    display: block;
+    margin-bottom: 6px;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+
+  .auth-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .auth-form button {
+    width: 100%;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .auth-form button:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 600px) {
+    .auth-form {
+      padding: 1rem;
+    }
+
+    .auth-form button {
+      font-size: 0.95rem;
+    }
+  }
+</style>
 {% endblock %}

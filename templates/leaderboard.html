@@ -2,39 +2,121 @@
 {% block title %}Leaderboard{% endblock %}
 
 {% block content %}
-<h1>🏆 Leaderboard</h1>
+<h2 style="text-align:center;">🏆 Leaderboard</h2>
 
-<form method="get" action="/leaderboard" class="matchday-filter">
-  <label>Filter by Week:</label>
-  <select name="week" onchange="this.form.submit()">
+<form method="get" action="/leaderboard" style="text-align: center; margin-bottom: 1rem;">
+  <label for="week">Filter by Week:</label>
+  <select name="week" id="week" onchange="this.form.submit()">
     <option value="">All Time</option>
-    {% for w in range(1, 54) %}
-      <option value="{{ w }}" {% if selected_week == w|string %}selected{% endif %}>Week {{ w }}</option>
+    {% for w in weeks %}
+      <option value="{{ w }}" {% if w == selected_week %}selected{% endif %}>Week {{ w }}</option>
     {% endfor %}
   </select>
 </form>
 
-<table class="leaderboard-table">
-  <thead>
-    <tr>
-      <th>Rank</th>
-      <th>Name</th>
-      <th>Points</th>
-      <th>Badges</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for entry in leaderboard %}
-    <tr>
-      <td>{{ loop.index }}</td>
-      <td>{{ entry.user }}</td>
-      <td>{{ entry.points }}</td>
-      <td>{{ entry.badges }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% if leaderboard %}
+<div class="badge-legend" style="margin-bottom: 1.5rem;">
+  <h4>🏅 Badge Legend</h4>
+  <ul style="list-style: none; padding: 0;">
+    <li><span title="🥇 Overall top scorer">🥇</span> – Top Scorer</li>
+    <li><span title="🔥 3 correct predictions in a row">🔥</span> – Hot Streak (3 in a row)</li>
+    <li><span title="🐙 Correct result & score">🐙</span> – Perfect Score</li>
+  </ul>
+</div>
+
+<div class="table-wrapper">
+  <table class="responsive-table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Predictions</th>
+        <th>Correct</th>
+        <th>Points</th>
+        <th>Badges</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in leaderboard %}
+      <tr>
+        <td>{{ row.user }}</td>
+        <td>{{ row.total_predictions }}</td>
+        <td>{{ row.correct_predictions }}</td>
+        <td>{{ row.points }}</td>
+        <td>
+          {% if row.badges %}
+            {% for badge in row.badges %}
+              <span title="{% if badge == '🥇' %}Top Scorer{% elif badge == '🔥' %}Hot Streak{% elif badge == '🐙' %}Perfect Score{% endif %}">
+                {{ badge }}
+              </span>
+            {% endfor %}
+          {% else %}–{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  <p style="text-align:center;">📋 No predictions submitted yet.</p>
+{% endif %}
 
 <br>
-<a href="/">← Back to Predictions</a>
+<div style="text-align: center;">
+  <a href="/" class="btn">🏠 Back to Home</a>
+</div>
+
+<style>
+  .table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  table.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background-color: var(--card-bg, #f9f9f9);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  }
+
+  table.responsive-table th,
+  table.responsive-table td {
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  table.responsive-table th {
+    background-color: var(--header-bg, #f0f0f0);
+    font-weight: bold;
+  }
+
+  table.responsive-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .btn {
+    background: #007BFF;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  @media (max-width: 600px) {
+    table.responsive-table th,
+    table.responsive-table td {
+      padding: 10px 5px;
+      font-size: 0.85rem;
+    }
+
+    .btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
 {% endblock %}

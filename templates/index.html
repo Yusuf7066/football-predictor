@@ -14,32 +14,119 @@
   {% endif %}
 {% endwith %}
 
+<style>
+  .match-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: var(--card-bg, #f9f9f9);
+  }
+
+  .match-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .team-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .score-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .match-form form {
+    margin-top: 10px;
+  }
+
+  .match-date {
+    text-align: center;
+    font-size: 0.9em;
+    color: gray;
+    margin-top: 5px;
+  }
+
+  .final-score {
+    text-align: center;
+    font-size: 0.9em;
+    color: #333;
+    margin: 5px 0;
+  }
+
+  @media (max-width: 600px) {
+    .match-header {
+      flex-direction: column;
+    }
+
+    .score-inputs {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+</style>
+
 {% for match in matches %}
-  <form method="POST" action="/predict" class="match-form">
-    <h3>{{ match.date }}: {{ match.home }} vs {{ match.away }}</h3>
-
-    <input type="hidden" name="match_id" value="{{ match.match_id }}">
-    <input type="hidden" name="match_time" value="{{ match.utc_datetime }}">
-
-    <label>Prediction:</label>
-    <select name="prediction" required>
-      <option value="">Choose</option>
-      <option value="Home Win">Home Win</option>
-      <option value="Draw">Draw</option>
-      <option value="Away Win">Away Win</option>
-    </select>
-
-    <label>Predicted Score:</label>
-    <div class="score-inputs">
-      <input type="number" name="home_score" placeholder="Home" min="0" required>
-      <span>-</span>
-      <input type="number" name="away_score" placeholder="Away" min="0" required>
+  <div class="match-card">
+    <div class="match-header">
+      <img src="{{ match.home_crest }}" class="team-logo" alt="{{ match.home }}">
+      <span>{{ match.home }}</span>
+      <span>vs</span>
+      <span>{{ match.away }}</span>
+      <img src="{{ match.away_crest }}" class="team-logo" alt="{{ match.away }}">
     </div>
 
-    <button type="submit">Submit Prediction</button>
-  </form>
+    <div class="match-date">{{ match.date }}</div>
+
+    {% if match.status == "FINISHED" and match.home_score is not none and match.away_score is not none %}
+      <div class="final-score">🏁 Final Score: {{ match.home_score }} - {{ match.away_score }}</div>
+    {% endif %}
+
+    {% if match.user_submitted %}
+      <p style="text-align: center; margin-top: 10px;">✅ Prediction submitted. <a href="/edit_prediction/{{ match.match_id }}">Edit</a></p>
+    {% else %}
+      <form method="POST" action="/predict">
+        <input type="hidden" name="match_id" value="{{ match.match_id }}">
+        <input type="hidden" name="match_time" value="{{ match.utc_datetime }}">
+        <input type="hidden" name="home_team" value="{{ match.home }}">
+        <input type="hidden" name="away_team" value="{{ match.away }}">
+        <input type="hidden" name="match_date" value="{{ match.date }}">
+
+        <label>Prediction:</label>
+        <select name="prediction" required>
+          <option value="">Choose</option>
+          <option value="Home Win">Home Win</option>
+          <option value="Draw">Draw</option>
+          <option value="Away Win">Away Win</option>
+        </select>
+
+        <label>Predicted Score:</label>
+        <div class="score-inputs">
+          <input type="number" name="home_score" placeholder="Home" min="0" required>
+          <span>-</span>
+          <input type="number" name="away_score" placeholder="Away" min="0" required>
+        </div>
+
+        <button type="submit">Submit Prediction</button>
+      </form>
+    {% endif %}
+  </div>
 {% endfor %}
 
 <br>
-<a href="/leaderboard">🏆 View Leaderboard</a>
+<div style="text-align: center;">
+  <a href="/leaderboard">🏆 View Leaderboard</a>
+</div>
 {% endblock %}

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: football-predictor
+    env: python
+    buildCommand: ""
+    startCommand: python app.py
+    envVars:
+      - key: SECRET_KEY
+        value: your-secret-key
+      - key: FOOTBALL_API_KEY
+        value: your-football-data-api-key
+      - key: TWILIO_ACCOUNT_SID
+        value: your-twilio-sid
+      - key: TWILIO_AUTH_TOKEN
+        value: your-twilio-token
