@@ -15,6 +15,13 @@ def register_auth_routes(app, client, FROM_WA):
     def clean_expired_otps():
         with sqlite3.connect("predictions.db") as conn:
             cursor = conn.cursor()
+            # ✅ Ensure resend_count column exists
+            cursor.execute("PRAGMA table_info(otp_sessions)")
+            columns = [col[1] for col in cursor.fetchall()]
+            if "resend_count" not in columns:
+                cursor.execute("ALTER TABLE otp_sessions ADD COLUMN resend_count INTEGER DEFAULT 0")
+                conn.commit()
+                print("✅ resend_count column added dynamically.")
             cursor.execute("DELETE FROM otp_sessions WHERE expires_at < ?", (datetime.utcnow().isoformat(),))
             conn.commit()
 
