@@ -1,22 +1,28 @@
-/* Reset & base setup */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
+/* Base colors */
+body {
   background-color: #ffffff;
   color: #000000;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark mode */
+/* Base setup */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Enable dark mode styles */
 body.dark {
   background-color: #121212;
   color: #ffffff;
 }
 
-/* Containers, cards, forms, tables */
-.match-form, .card, form, .flash, table {
+/* General container backgrounds */
+.match-form, .card, form, .flash, table, .match-card {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -25,85 +31,49 @@ body.dark {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* Dark mode overrides */
 body.dark .match-form,
 body.dark .card,
 body.dark form,
 body.dark .flash,
-body.dark table {
+body.dark table,
+body.dark .match-card {
   background-color: #1e1e1e;
   border-color: #444;
-  color: #fff;
+  color: #ffffff;
 }
 
-/* Forms */
-input[type="text"],
-input[type="number"],
-input[type="password"],
-select {
-  width: 100%;
-  padding: 0.6rem;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+/* Enhance readability in dark mode */
+body.dark .match-card span,
+body.dark .match-card p,
+body.dark .match-card label {
+  color: #eee;
 }
 
-body.dark input,
-body.dark select {
-  background-color: #2a2a2a;
-  color: #fff;
-  border: 1px solid #555;
-}
-
-/* Buttons */
-button {
-  padding: 0.6rem 1.2rem;
-  background-color: #0077cc;
-  color: white;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #005fa3;
-}
-
-button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-
-body.dark button {
-  background-color: #3399ff;
-}
-
-/* Tables */
+/* Match form & tables */
+.match-form,
 table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
+  background-color: #f9f9f9;
+  color: #000000;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-table th, table td {
-  padding: 12px 8px;
-  text-align: center;
+.dark .match-form,
+.dark table {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-color: #444;
+}
+
+/* Table rows */
+table tr {
   border-bottom: 1px solid #ccc;
 }
-
-table th {
-  background-color: #f0f0f0;
-  font-weight: bold;
-}
-
-body.dark table th {
-  background-color: #222;
-}
-
-body.dark table tr {
+.dark table tr {
   border-bottom: 1px solid #555;
 }
 
@@ -112,37 +82,55 @@ body.dark table tr {
   background-color: #e0ffe0;
   border: 1px solid #8f8;
   padding: 10px;
+  margin-bottom: 10px;
   border-radius: 6px;
 }
-
-body.dark .flash {
+.dark .flash {
   background-color: #294c29;
   border-color: #6f6;
 }
 
-/* Badge Legend */
+/* Buttons */
+button {
+  padding: 0.5rem 1rem;
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.dark button {
+  background-color: #3399ff;
+}
+
+main, .container {
+  background-color: transparent;
+}
+.dark main, .dark .container {
+  background-color: transparent;
+}
+
+/* Badge legend */
 .badge-legend {
   margin-top: 1.5rem;
-  background: #f1f1f1;
+  background: var(--card-bg, #f1f1f1);
   padding: 10px 15px;
   border-radius: 8px;
   font-size: 0.9rem;
 }
-
-body.dark .badge-legend {
-  background: #1c1c1c;
-  border-color: #555;
+.dark .badge-legend {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
 }
 
 .badge-legend h4 {
   margin-bottom: 8px;
 }
-
 .badge-legend ul {
   list-style: none;
   padding-left: 0;
 }
-
 .badge-legend li {
   margin-bottom: 4px;
   display: flex;
@@ -150,23 +138,49 @@ body.dark .badge-legend {
   gap: 8px;
 }
 
-/* Responsive adjustments */
+/* Match card specifics */
+.match-card {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.match-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+}
+.team-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.score-inputs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.match-form form {
+  margin-top: 10px;
+}
+
+/* Mobile responsiveness */
 @media (max-width: 600px) {
-  table th, table td {
-    padding: 8px 4px;
-    font-size: 0.85rem;
+  .match-header {
+    flex-direction: column;
   }
-
-  button {
-    width: 100%;
-    text-align: center;
+  .score-inputs {
+    flex-direction: row;
+    justify-content: center;
   }
-
-  input, select {
-    font-size: 0.95rem;
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
   }
-
-  .match-form, form, table {
-    padding: 0.8rem;
+  nav a {
+    margin: 0.5rem 0;
   }
 }
