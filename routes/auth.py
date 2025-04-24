@@ -10,7 +10,7 @@ import re
 def register_auth_routes(app, client, FROM_WA):
 
     def is_valid_phone(phone):
-        return re.fullmatch(r"\+?[0-9]{10,15}", phone) is not None
+        return re.fullmatch(r"(?:\+|00)?[0-9]{10,15}", phone) is not None
 
     def clean_expired_otps():
         with sqlite3.connect("predictions.db") as conn:
